@@ -51,6 +51,7 @@ public class MemUtils {
 
     }
 
+
     public static int insertMember(MemberInfo obj, String sql) {
 
         String[] obFields = FiledsName.getMemberName();
@@ -58,6 +59,18 @@ public class MemUtils {
 
         return insertInfo(sql, values);
 
+    }
+
+    public static int updataMeetStatus(String id, String status) {
+        PreparedStatement preparedStatement = DB.getPrepareStmt(SQL.updateMeetById);
+        try {
+            preparedStatement.setString(1, status);
+            preparedStatement.setInt(2, Integer.parseInt(id));
+            return preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     public static int insertMeeting(Meeting obj, String sql) {

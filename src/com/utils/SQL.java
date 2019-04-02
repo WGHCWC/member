@@ -13,5 +13,6 @@ public class SQL {
             "introduce=?";
     public static final String serachAllMeeting = "select * from Meeting ;";
     public static final String insertMeeting = "insert into Meeting set id=?,name=?,address=?,mail=?,introduce=?,status=?;";
+    public static final String updateMeetById="update Meeting  set status=? where id=?;";
 
 }

@@ -43,3 +43,5 @@ CREATE TABLE `Meeting`
 
 insert into Meeting set name='安全会议',address='中央大厅',mail='101@.com',introduce='test';
 select * from Meeting;
+
+update Meeting  set status='-1' where id=1;
