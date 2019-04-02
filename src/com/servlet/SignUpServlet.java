@@ -1,8 +1,9 @@
 package com.servlet;
 
 import com.utils.DB;
-import com.Bean.SQL;
-import com.Bean.SignUpInfo;
+import com.utils.MemUtils;
+import com.utils.SQL;
+import com.Bean.MemberInfo;
 import com.utils.InputStreamUtils;
 
 import java.io.IOException;
@@ -59,7 +60,6 @@ public class SignUpServlet extends HttpServlet {
      * @throws IOException if an error occurred
      */
 
-
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
 
@@ -70,33 +70,26 @@ public class SignUpServlet extends HttpServlet {
 
         PrintWriter out = response.getWriter();
 
-        SignUpInfo info = null;
+        MemberInfo info = null;
         try {
-            info = DB.gson().fromJson(InputStreamUtils.getInputString(request.getInputStream()), SignUpInfo.class);
+            info = DB.gson().fromJson(InputStreamUtils.getInputString(request.getInputStream()), MemberInfo.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        PreparedStatement pstm = DB.getPrepareStmt(SQL.checkEmail);
-        try {
-            pstm.setString(1, info.getEmail());
-
-            ResultSet rs = DB.executeQuery(pstm);
-            List<SignUpInfo> infos=new ArrayList<>();
-            for(int i=0;i<3;i++)
-                infos.add(info);
-            if (rs.next()) {
-                out.println(DB.gson().toJson(infos));
-                out.flush();
-                out.close();
-            } else {
-                out.println("成功");
-                out.flush();
-                out.close();
+        List<String> infos=MemUtils.searchByMail(info.getMail());
+        if(infos!=null){
+            out.println(DB.gson().toJson(new Error(" 用户已存在...")));
+        }else {
+            int num=MemUtils.insertMember(info,SQL.insertMember);
+            if(num!=1){
+                out.println(DB.gson().toJson(new Error(" 操作失误，联系管理员...")));
+            }else {
+                out.println(DB.gson().toJson(MemUtils.searchByMail(info.getMail()),List.class));
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+
+
 
         out.flush();
         out.close();

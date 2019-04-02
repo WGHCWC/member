@@ -1,8 +1,10 @@
 package com.servlet;
 
+import com.Bean.MemberInfo;
 import com.utils.DB;
 import com.Bean.LoginInfo;
-import com.Bean.SQL;
+import com.utils.MemUtils;
+import com.utils.SQL;
 import com.utils.InputStreamUtils;
 import com.google.gson.Gson;
 
@@ -11,12 +13,15 @@ import java.io.PrintWriter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class SignInServlet extends HttpServlet {
+
+    private PrintWriter out;
 
     /**
      * Constructor of the object.
@@ -66,25 +71,15 @@ public class SignInServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
 
         PrintWriter out = response.getWriter();
-        Gson gson = new Gson();
         LoginInfo info = null;
         try {
-            info = gson.fromJson(InputStreamUtils.getInputString(request.getInputStream()), LoginInfo.class);
+            info = DB.gson().fromJson(InputStreamUtils.getInputString(request.getInputStream()), LoginInfo.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        PreparedStatement pstm = DB.getPrepareStmt(SQL.checkEmail);
-        try {
-            pstm.setString(1, info.getEmail());
-            ResultSet rs = DB.executeQuery(pstm);
-            if (rs.next()) {
-                out.println(DB.gson().toJson(info));
-            } else {
-                out.println("false");
-
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (MemUtils.checkPassword(info.getEmail(), info.getPassword())) {
+            List<String> infos = MemUtils.searchByMail(info.getEmail());
+            out.println(infos.get(0));
         }
 
         out.flush();

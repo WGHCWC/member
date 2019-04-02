@@ -1,17 +1,4 @@
-/*
-Navicat MySQL Data Transfer
 
-Source Server         : 127.0.0.1
-Source Server Version : 50168
-Source Host           : localhost:3306
-Source Database       : lib
-
-Target Server Type    : MYSQL
-Target Server Version : 50168
-File Encoding         : 65001
-lib
-Date: 2016-05-04 15:50:23
-*/
 
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -19,21 +6,40 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `MemberInfo`;
 CREATE TABLE `MemberInfo`
 (
-  `member_id`        varchar(10)                       NOT NULL AUTO_INCREMENT,
-  `level`            varchar(10)                       NOT NULL,
-  `member_name`      varchar(50) COLLATE utf8_bin  NOT NULL,
-  `member_address`   varchar(500) COLLATE utf8_bin NOT NULL,
-  `member_phone`     varchar(36) COLLATE utf8_bin  NOT NULL,
-  `member_job`       varchar(36) COLLATE utf8_bin  NOT NULL,
-  `member_introduce` varchar(500) COLLATE utf8_bin,
-  `member_mail`      varchar(50) COLLATE utf8_bin  NOT NULL,
-  `member_sexual`    varchar(10) COLLATE utf8_bin  NOT NULL,
-  `member_password`  varchar(50) COLLATE utf8_bin  NOT NULL,
-  PRIMARY KEY (`member_id`)
+    `id`         int(10)                  NOT NULL AUTO_INCREMENT,
+    `level`      varchar(10)                  NOT NULL,
+    `name`       varchar(50)  COLLATE utf8_bin,
+    `address`    varchar(500) COLLATE utf8_bin,
+    `background` varchar(20)  COLLATE utf8_bin,
+    `mail`       varchar(50)  COLLATE utf8_bin NOT NULL,
+    `password`  varchar(50) COLLATE utf8_bin NOT NULL,
+    `introduce` varchar(500) COLLATE utf8_bin,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = utf8
+  COLLATE = utf8_bin;
+insert into MemberInfo values (1,'admin','ZQ','苏州','群众','1@1.com','admin','master');
 
+insert into MemberInfo values (2,'admin','ZQ','苏州','群众','1@2.com','admin','master');
+#  insert into MemberInfo set level=?,name=?,address=?,background=?,mail=?,password=?;
+
+
+##会议申报
+DROP TABLE IF EXISTS `Meeting`;
+CREATE TABLE `Meeting`
+(
+    `id`          int(10)    COLLATE utf8_bin not null auto_increment,
+    `name`       varchar(50)  COLLATE utf8_bin not null ,
+    `address`    varchar(500) COLLATE utf8_bin not null,
+    `mail`       varchar(50)  COLLATE utf8_bin NOT NULL,
+    `introduce` varchar(500) COLLATE utf8_bin,
+    `status`    varchar(10) default '0' COLLATE utf8_bin not null ,
+    PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8
   COLLATE = utf8_bin;
 
-insert into Persons values (345,'sasa','guangd','四川');
+insert into Meeting set name='安全会议',address='中央大厅',mail='101@.com',introduce='test';
+select * from Meeting;

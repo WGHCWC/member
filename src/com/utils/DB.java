@@ -39,7 +39,7 @@ public class DB {
                         }
                         //mysql数据库的端口默认是3306；characterEncoding的指编码格式,这个一定要加，不然存到数据库的数据会乱码;最后面的两个参数是mysql数据库的用户名和密码,我的是用户名是root密码是root,连接你自己的时候,你改成你自己的就可以了
                         //conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bio_member_system?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull", "root", "root");
-                        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bio_member_system?useUnicode=true&characterEncoding=utf8&useOldAliasMetadataBehavior=true&useSSL=true"
+                        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bio_member_system?useUnicode=true&characterEncoding=utf8&useOldAliasMetadataBehavior=true&useSSL=false&serverTimezone=GMT"
                                 , "root", "root");
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
@@ -70,7 +70,6 @@ public class DB {
     }
 
     public static PreparedStatement getPrepareStmt(String sql) {
-
         try {
            return getConn().prepareStatement(sql);
         } catch (SQLException e) {
