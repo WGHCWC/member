@@ -13,7 +13,7 @@ import java.util.List;
 public class MemUtils {
     public static List<String> searchByMail(String mail) {
         List<String> temp = new ArrayList<>();
-        String[] mem = FiledsName.getMemberName();
+        String[] mem = FieldsName.getName(MemberInfo.class);
         try {
             PreparedStatement pstm = DB.getPrepareStmt(SQL.checkEmail);
             pstm.setString(1, mail);
@@ -53,19 +53,16 @@ public class MemUtils {
 
 
     public static int insertMember(MemberInfo obj, String sql) {
-
-        String[] obFields = FiledsName.getMemberName();
+        String[] obFields = FieldsName.getName(obj.getClass());
         String[] values = getObjFieldsValue(obj, obFields);
-
-        return insertInfo(sql, values);
-
+        return updateInfo(sql, values);
     }
 
-    public static int updataMeetStatus(String id, String status) {
-        PreparedStatement preparedStatement = DB.getPrepareStmt(SQL.updateMeetById);
+    public static int updateStatus(String id, String status,String sql) {
+        PreparedStatement preparedStatement = DB.getPrepareStmt(sql);
         try {
             preparedStatement.setString(1, status);
-            preparedStatement.setInt(2, Integer.parseInt(id));
+            preparedStatement.setString(2, id);
             return preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -73,16 +70,38 @@ public class MemUtils {
         return 0;
     }
 
-    public static int insertMeeting(Meeting obj, String sql) {
+    public static int deleteById(String id, String sql) {
+        PreparedStatement preparedStatement = DB.getPrepareStmt(sql);
+        try {
+            preparedStatement.setInt(1, Integer.parseInt(id));
+            return preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 
-        String[] obFields = FiledsName.getMeetName();
+    public static <T> int updateSQL(T obj, String sql) {
+
+        String[] obFields = FieldsName.getName(obj.getClass());
         String[] values = getObjFieldsValue(obj, obFields);
-
-        return insertInfo(sql, values);
+        return updateInfo(sql, values);
 
     }
 
-    private static int insertInfo(String sql, String[] values) {
+    public static int updateTimes(String id) {
+        PreparedStatement preparedStatement = DB.getPrepareStmt(SQL.updateVoteArticle);
+
+        try {
+            preparedStatement.setInt(1, Integer.parseInt(id));
+            return preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public static int updateInfo(String sql, String[] values) {
         PreparedStatement preparedStatement = DB.getPrepareStmt(sql);
         for (int i = 0; i < values.length; i++) {
             try {
@@ -119,7 +138,8 @@ public class MemUtils {
         return values;
     }
 
-    public static List<String> searchAll(String sql, String[] mem) {
+    public static List<String> searchAll(String sql, Class clazz) {
+        String[] mem = FieldsName.getName(clazz);
         List<String> temp = new ArrayList<>();
         try {
             ResultSet rs = DB.executeQuery(sql);

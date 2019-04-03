@@ -24,7 +24,7 @@ insert into MemberInfo values (1,'admin','ZQ','苏州','群众','1@1.com','admin
 insert into MemberInfo values (2,'admin','ZQ','苏州','群众','1@2.com','admin','master');
 #  insert into MemberInfo set level=?,name=?,address=?,background=?,mail=?,password=?;
 
-
+update MemberInfo  set level='-1' ,name='ww',address='sss', background='ddd',password='ddd',introduce='dd' where mail='1@1.com';
 ##会议申报
 DROP TABLE IF EXISTS `Meeting`;
 CREATE TABLE `Meeting`
@@ -42,4 +42,46 @@ CREATE TABLE `Meeting`
   COLLATE = utf8_bin;
 
 insert into Meeting set name='安全会议',address='中央大厅',mail='101@.com',introduce='test';
+
+update Meeting  set status='-1' where id=1;
+select * from Meeting;
+
+DROP TABLE IF EXISTS `Message`;
+CREATE TABLE `Message`
+(
+    `id`          int(10)    COLLATE utf8_bin not null auto_increment,
+    `title`       varchar(50)  COLLATE utf8_bin not null ,
+    `author`    varchar(50) COLLATE utf8_bin not null,
+    `main`       varchar(5000)  COLLATE utf8_bin NOT NULL,
+    `status`    varchar(10) default '0' COLLATE utf8_bin not null ,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = utf8
+  COLLATE = utf8_bin;
+
+insert into Meeting set name='安全会议',address='中央大厅',mail='101@.com',introduce='test';
+
+update Meeting  set status='-1' where id=1;
+select * from Meeting;
+
+
+DROP TABLE IF EXISTS `Article`;
+CREATE TABLE `Article`
+(
+    `id`          int(10)    COLLATE utf8_bin not null auto_increment,
+    `times`        int(10) default 0 not null ,
+    `title`       varchar(50)  COLLATE utf8_bin not null ,
+    `author`    varchar(50) COLLATE utf8_bin not null,
+    `main`       varchar(5000)  COLLATE utf8_bin NOT NULL,
+    `status`    varchar(10) default '0' COLLATE utf8_bin not null ,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = utf8
+  COLLATE = utf8_bin;
+
+insert into Meeting set name='安全会议',address='中央大厅',mail='101@.com',introduce='test';
+
+update Meeting  set status='-1' where id=1;
 select * from Meeting;

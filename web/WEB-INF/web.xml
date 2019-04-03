@@ -4,7 +4,7 @@
 		  http://java.sun.com/xml/ns/javaee/web-app_4_0.xsd" version="4.0">
     <servlet>
         <servlet-name>SignUpServlet</servlet-name>
-        <servlet-class>com.servlet.SignUpServlet</servlet-class>
+        <servlet-class>com.servlet.info.SignUpServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>SignUpServlet</servlet-name>
@@ -12,7 +12,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>SignInServlet</servlet-name>
-        <servlet-class>com.servlet.SignInServlet</servlet-class>
+        <servlet-class>com.servlet.info.SignInServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>SignInServlet</servlet-name>
