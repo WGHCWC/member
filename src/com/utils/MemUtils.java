@@ -40,7 +40,7 @@ public class MemUtils {
             pstm.setString(1, mail);
             ResultSet rs = DB.executeQuery(pstm);
             if (rs.next()) {
-                if (password.equals(rs.getString("mail"))) {
+                if (password.equals(rs.getString("password"))) {
                     return true;
                 }
             }
@@ -128,7 +128,7 @@ public class MemUtils {
                 Field field = clazz.getDeclaredField(obFields[i]);
                 field.setAccessible(true);
                 values[i] = (String) field.get(obj);
-                ;
+
             } catch (Exception e) {
                 values[i] = null;
 

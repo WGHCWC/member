@@ -3,7 +3,7 @@ package com.Bean;
 
 public class MemberInfo {
 
-    private String level;
+    private String level="user";
     private String name;
     private String address;
     private String background;

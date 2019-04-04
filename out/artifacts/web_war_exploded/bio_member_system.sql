@@ -2,7 +2,7 @@
 
 SET FOREIGN_KEY_CHECKS = 0;
 
-
+################会员管理
 DROP TABLE IF EXISTS `MemberInfo`;
 CREATE TABLE `MemberInfo`
 (
@@ -25,7 +25,9 @@ insert into MemberInfo values (2,'admin','ZQ','苏州','群众','1@2.com','admin
 #  insert into MemberInfo set level=?,name=?,address=?,background=?,mail=?,password=?;
 
 update MemberInfo  set level='-1' ,name='ww',address='sss', background='ddd',password='ddd',introduce='dd' where mail='1@1.com';
-##会议申报
+
+
+##############################会议申报
 DROP TABLE IF EXISTS `Meeting`;
 CREATE TABLE `Meeting`
 (
@@ -46,6 +48,7 @@ insert into Meeting set name='安全会议',address='中央大厅',mail='101@.co
 update Meeting  set status='-1' where id=1;
 select * from Meeting;
 
+############################通知消息
 DROP TABLE IF EXISTS `Message`;
 CREATE TABLE `Message`
 (
@@ -60,11 +63,15 @@ CREATE TABLE `Message`
   DEFAULT CHARSET = utf8
   COLLATE = utf8_bin;
 
-insert into Meeting set name='安全会议',address='中央大厅',mail='101@.com',introduce='test';
+insert into Message set title='中央大厅',author='101@.com',main='test';
 
-update Meeting  set status='-1' where id=1;
-select * from Meeting;
+update Message  set status='-1' where id=1;
+select * from Message;
+DELETE FROM Message WHERE id=1;
+select * from Message;
 
+
+############################### 文章评审
 
 DROP TABLE IF EXISTS `Article`;
 CREATE TABLE `Article`
@@ -81,7 +88,9 @@ CREATE TABLE `Article`
   DEFAULT CHARSET = utf8
   COLLATE = utf8_bin;
 
-insert into Meeting set name='安全会议',address='中央大厅',mail='101@.com',introduce='test';
 
-update Meeting  set status='-1' where id=1;
-select * from Meeting;
+insert into Article set title='中央大厅',author='101@.com',main='test';
+insert into Article set title='中央大厅',author='101@.com',main='test';
+update Article  set status='-1' where id=1;
+DELETE FROM Article WHERE id=1;
+select * from Article;

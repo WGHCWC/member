@@ -1,5 +1,7 @@
 package com.servlet.info;
 
+import com.Bean.MemberInfo;
+import com.Bean.Result;
 import com.utils.DB;
 import com.Bean.LoginInfo;
 import com.utils.MemUtils;
@@ -67,14 +69,23 @@ public class SignInServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         LoginInfo info = null;
         try {
-            String a=InputStreamUtils.getInputString(request.getInputStream());
+            String a = InputStreamUtils.getInputString(request.getInputStream());
             info = DB.gson().fromJson(a, LoginInfo.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        Result<MemberInfo> infoResult = new Result<>();
         if (MemUtils.checkPassword(info.getEmail(), info.getPassword())) {
             List<String> infos = MemUtils.searchByMail(info.getEmail());
-            out.println(infos.get(0));
+
+            infoResult.setData(DB.gson().fromJson(infos.get(0),MemberInfo.class));
+            infoResult.setCode(200);
+            String a = DB.gson().toJson(infoResult, Result.class);
+            out.println(a);
+        } else {
+            infoResult.setCode(400);
+            infoResult.msg = "密码错误";
+            out.println(DB.gson().toJson(infoResult, Result.class));
         }
 
         out.flush();
