@@ -1,6 +1,7 @@
 package com.servlet.info;
 
 import com.Bean.MemberInfo;
+import com.Bean.MyResult;
 import com.utils.DB;
 import com.utils.InputStreamUtils;
 import com.utils.MemUtils;
@@ -14,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 @WebServlet("/UpDateMemberServlet")
 public class UpDateMemberServlet extends HttpServlet {
 
@@ -64,6 +66,7 @@ public class UpDateMemberServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         MemberInfo info = null;
+        MyResult<String> myResult =new MyResult<>();
         try {
             String a= InputStreamUtils.getInputString(request.getInputStream());
             info = DB.gson().fromJson(a, MemberInfo.class);
@@ -72,10 +75,15 @@ public class UpDateMemberServlet extends HttpServlet {
         }
             int num=MemUtils.insertMember(info,SQL.updateMemberInfo);
             if(num!=1){
-                out.println(DB.gson().toJson(new Error(" 操作失误，联系管理员...")));
+                myResult.code=400;
+                myResult.msg=" 操作失误，联系管理员...";
             }else {
-                out.println(DB.gson().toJson(MemUtils.searchByMail(info.getMail()),List.class));
+                myResult.code=200;
+                List<String> a=MemUtils.searchByMail(info.getMail());
+                myResult.setData(a.get(0));
+
         }
+        out.println(DB.gson().toJson(myResult));
         out.flush();
         out.close();
     }

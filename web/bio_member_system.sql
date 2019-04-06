@@ -1,5 +1,5 @@
 
-
+com.mysql.cj.jdbc.ClientPreparedStatement: update MemberInfo  set level='-1' ,name='问问二位we',address='为为w为', background='为为w我',introduce='二位我w' password='ddd'where mail='1@1.com';
 SET FOREIGN_KEY_CHECKS = 0;
 
 ################会员管理

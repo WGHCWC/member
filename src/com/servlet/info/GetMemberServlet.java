@@ -1,6 +1,7 @@
 package com.servlet.info;
 
 import com.Bean.MemberInfo;
+import com.Bean.MyResult;
 import com.utils.DB;
 import com.utils.FieldsName;
 import com.utils.MemUtils;
@@ -8,12 +9,14 @@ import com.utils.SQL;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 @WebServlet("/GetMemberServlet")
 public class GetMemberServlet extends HttpServlet {
 
@@ -66,13 +69,23 @@ public class GetMemberServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
 
         PrintWriter out = response.getWriter();
+        MyResult<List<MemberInfo>> myResult = new MyResult<>();
 
-        List<String> infos=MemUtils.searchAll(SQL.searchAllMember, MemberInfo.class);
-        if(infos!=null){
-            out.println(DB.gson().toJson(infos,List.class));
-        }else {
-           out.println("null");
+        List<String> infos = MemUtils.searchAll(SQL.searchAllMember, MemberInfo.class);
+        if (infos != null) {
+            List<MemberInfo> memberInfos = new ArrayList<>();
+            for (String info : infos) {
+                MemberInfo memberInfo = DB.gson().fromJson(info, MemberInfo.class);
+                memberInfos.add(memberInfo);
+            }
+            myResult.code = 200;
+            myResult.setData(memberInfos);
+        } else {
+            myResult.code=400;
+            myResult.msg="空";
         }
+        out.println(DB.gson().toJson(myResult, MyResult.class));
+
         out.flush();
         out.close();
 

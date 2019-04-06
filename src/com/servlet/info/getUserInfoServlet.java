@@ -9,10 +9,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+@WebServlet("/getUserInfoServlet")
 public class getUserInfoServlet extends HttpServlet {
 
     private PrintWriter out;

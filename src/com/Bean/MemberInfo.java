@@ -3,13 +3,13 @@ package com.Bean;
 
 public class MemberInfo {
 
-    private String level="user";
+    private String level = "user";
     private String name;
     private String address;
     private String background;
-    private String mail;
-    private String password;
     private String introduce;
+    private String password;
+    private String mail;
 
     public String getIntroduce() {
         return introduce;

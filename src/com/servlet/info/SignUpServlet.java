@@ -1,6 +1,6 @@
 package com.servlet.info;
 
-import com.Bean.Result;
+import com.Bean.MyResult;
 import com.utils.DB;
 import com.utils.MemUtils;
 import com.utils.SQL;
@@ -74,24 +74,24 @@ public class SignUpServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Result<String> result = new Result<>();
+        MyResult<String> myResult = new MyResult<>();
 
         List<String> infos = MemUtils.searchByMail(info.getMail());
         if (infos != null) {
-            result.setCode(400);
-            result.msg = "用户已存在";
+            myResult.setCode(400);
+            myResult.msg = "用户已存在";
         } else {
             int num = MemUtils.insertMember(info, SQL.insertMember);
             if (num != 1) {
-                result.setCode(500);
-                result.msg = "注册失败，联系管理员。。";
+                myResult.setCode(500);
+                myResult.msg = "注册失败，联系管理员。。";
             } else {
-                result.setCode(200);
-                result.setData(MemUtils.searchByMail(info.getMail()).get(0));
+                myResult.setCode(200);
+                myResult.setData(MemUtils.searchByMail(info.getMail()).get(0));
             }
 
         }
-        String a=DB.gson().toJson(result, Result.class);
+        String a=DB.gson().toJson(myResult, MyResult.class);
         out.println(a);
         out.flush();
         out.close();

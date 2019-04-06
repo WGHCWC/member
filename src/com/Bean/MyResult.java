@@ -1,9 +1,12 @@
 package com.Bean;
 
-public class Result<T> {
+import java.util.List;
+
+public class MyResult<T> {
     public int code;
     public String msg;
     private T data;
+    public List<T> list;
 
     public T getData() {
         return data;

@@ -1,14 +1,14 @@
 package com.utils;
 
 public class SQL {
-    public static final String updateMemberInfo="update MemberInfo  set " +
+    public static final String updateMemberInfo = "update MemberInfo  set " +
             "level=? ," +
             "name=?," +
             "address=?, " +
             "background=?," +
-            "password=?," +
-            "introduce=? " +
-            "where mail=?S;";
+            "introduce=?, " +
+            "password=?" +
+            "where mail=?;";
 
     public static final String updateLevel = "update MemberInfo  set level=? where id=?";
 
@@ -19,11 +19,13 @@ public class SQL {
             "name=?," +
             "address=?," +
             "background=?," +
-            "mail=?," +
             "password=?," +
-            "introduce=?";
+            "introduce=?" +
+            "mail=?";
 
-    /** meet*/
+    /**
+     * meet
+     */
 
     public static final String searchAllMeeting = "select * from Meeting ;";
     public static final String insertMeeting = "insert into Meeting set " +
@@ -33,10 +35,12 @@ public class SQL {
             "mail=?," +
             "introduce=?," +
             "status=?;";
-    public static final String updateMeetById="update Meeting  set status=? where id=?;";
+    public static final String updateMeetById = "update Meeting  set status=? where id=?;";
 
 
-   /** message*/
+    /**
+     * message
+     */
     public static final String insertMessage = "insert into Message set " +
             "id=?," +
             "title=?," +
@@ -44,15 +48,17 @@ public class SQL {
             "main=?," +
             "status=?;";
     public static final String searchAllMessage = "select * from Message ;";
-    public static final String delMessage="DELETE FROM Message WHERE id=?;";
+    public static final String delMessage = "DELETE FROM Message WHERE id=?;";
 
 
-    /** article*/
+    /**
+     * article
+     */
 
     public static final String insertArticle = "insert into Article set id=?,times=?,title=?,author=?,main=?,status=?;";
     public static final String searchAllArticle = "select * from Article ;";
     public static final String updateVoteArticle = "update Article  set times=times+1 where id=?";
-    public static final String delArticle="DELETE FROM Article WHERE id=?;";
+    public static final String delArticle = "DELETE FROM Article WHERE id=?;";
 
 
 }
