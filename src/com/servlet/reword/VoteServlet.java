@@ -4,6 +4,7 @@ import com.Bean.Meeting;
 import com.utils.DB;
 import com.utils.InputStreamUtils;
 import com.utils.MemUtils;
+import com.utils.MyResult;
 import com.utils.SQL;
 
 import java.io.IOException;
@@ -67,16 +68,24 @@ public class VoteServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
 
         PrintWriter out = response.getWriter();
-
-        int i = MemUtils.updateTimes( "1");
-
-            out.println(i);
-
-
-
+        String a="";
+        MyResult myResult=new MyResult();
+        try {
+            a =InputStreamUtils.getInputString(request.getInputStream());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        int i = MemUtils.updateTimes( a);
+            if(i==1){
+                myResult.code=200;
+            }else {
+                myResult.code=400;
+                myResult.msg="投票失败";
+            }
+        a=DB.gson().toJson(myResult,MyResult.class);
+        out.println(a);
         out.flush();
         out.close();
-
     }
 
 

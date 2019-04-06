@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MemUtils {
-    public static List<String> searchByMail(String mail) {
+    public static List<String> searchByMail(String mail,String sql,Class clazz) {
         List<String> temp = new ArrayList<>();
-        String[] mem = FieldsName.getName(MemberInfo.class);
+        String[] mem = FieldsName.getName(clazz);
         try {
-            PreparedStatement pstm = DB.getPrepareStmt(SQL.checkEmail);
+            PreparedStatement pstm = DB.getPrepareStmt(sql);
             pstm.setString(1, mail);
             ResultSet rs = DB.executeQuery(pstm);
             while (rs.next()) {
@@ -80,6 +80,16 @@ public class MemUtils {
         }
         return 0;
     }
+    public static int deleteByMail(String mail, String sql) {
+        PreparedStatement preparedStatement = DB.getPrepareStmt(sql);
+        try {
+            preparedStatement.setString(1, mail);
+            return preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 
     public static <T> int updateSQL(T obj, String sql) {
 
@@ -129,8 +139,9 @@ public class MemUtils {
                 field.setAccessible(true);
                 values[i] = (String) field.get(obj);
 
+
             } catch (Exception e) {
-                values[i] = null;
+                values[i] = "0";
 
             }
 

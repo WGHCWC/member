@@ -1,9 +1,8 @@
 package com.servlet.info;
 
 import com.Bean.MemberInfo;
-import com.Bean.MyResult;
+import com.utils.MyResult;
 import com.utils.DB;
-import com.utils.FieldsName;
 import com.utils.MemUtils;
 import com.utils.SQL;
 

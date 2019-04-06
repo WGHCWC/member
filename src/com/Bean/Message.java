@@ -4,10 +4,9 @@ import com.sun.org.apache.xpath.internal.operations.Or;
 
 public class Message {
     private String id;
+    private String date;
     private String title;
-    private String author;
-    private String main;
-    private String status="0";
+    private String details;
 
     public String getId() {
         return id;
@@ -15,6 +14,14 @@ public class Message {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getTitle() {
@@ -25,27 +32,11 @@ public class Message {
         this.title = title;
     }
 
-    public String getAuthor() {
-        return author;
+    public String getDetails() {
+        return details;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public String getMain() {
-        return main;
-    }
-
-    public void setMain(String main) {
-        this.main = main;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    public void setDetails(String details) {
+        this.details = details;
     }
 }

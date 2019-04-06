@@ -75,7 +75,7 @@ public class UpDateMemberLevelServlet extends HttpServlet {
             if(num!=1){
                 out.println(DB.gson().toJson(new Error(" 操作失误，联系管理员...")));
             }else {
-                out.println(DB.gson().toJson(MemUtils.searchByMail(info.getMail()),List.class));
+                out.println(DB.gson().toJson(MemUtils.searchByMail(info.getMail(),SQL.checkEmail,MemberInfo.class),List.class));
         }
         out.flush();
         out.close();

@@ -1,29 +1,27 @@
-package com.servlet.reword;
+package com.servlet.info;
 
-import com.Bean.Article;
-import com.Bean.Message;
-import com.utils.DB;
-import com.utils.MemUtils;
 import com.utils.MyResult;
+import com.utils.DB;
+import com.utils.InputStreamUtils;
+import com.utils.MemUtils;
 import com.utils.SQL;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/GetArticleServlet")
-public class GetArticleServlet extends HttpServlet {
+@WebServlet("/DeleteMemberServlet")
+public class DeleteMemberServlet extends HttpServlet {
+
 
     /**
      * Constructor of the object.
      */
-    public GetArticleServlet() {
+    public DeleteMemberServlet() {
         super();
     }
 
@@ -63,36 +61,31 @@ public class GetArticleServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
-
-
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         request.setCharacterEncoding("UTF-8");
 
         PrintWriter out = response.getWriter();
-        MyResult<List<Article>> myResult=new MyResult();
-
-        List<String> arts=MemUtils.searchAll(SQL.searchAllArticle, Article.class);
-
-        if(arts!=null){
-            myResult.code=200;
-            List<Article> art=new ArrayList<>();
-            for (int i=arts.size()-1;i>=0;i--){
-                Article msge=DB.gson().fromJson(arts.get(i),Article.class);
-                art.add(msge);
-
-            }
-            myResult.setData(art);
-        }else {
-            myResult.code=400;
-            myResult.msg="暂无数据";
+        String a="";
+        MyResult myResult=new MyResult();
+        try {
+          a =InputStreamUtils.getInputString(request.getInputStream());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        if(!a.isEmpty()) {
+            int i = MemUtils.deleteByMail(a, SQL.delMember);
+            if(i!=0){
+                myResult.code=200;
 
+            }else {
+                myResult.code=400;
+                myResult.msg="删除失败";
+            }
 
-        String a=DB.gson().toJson(myResult, MyResult.class);
+        }
+        a=DB.gson().toJson(myResult,MyResult.class);
         out.println(a);
-
-
         out.flush();
         out.close();
 

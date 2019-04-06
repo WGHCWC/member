@@ -1,9 +1,11 @@
 package com.servlet.info;
 
 import com.Bean.LoginInfo;
+import com.Bean.MemberInfo;
 import com.utils.DB;
 import com.utils.InputStreamUtils;
 import com.utils.MemUtils;
+import com.utils.SQL;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -73,7 +75,7 @@ public class getUserInfoServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-            List<String> infos = MemUtils.searchByMail(info.getEmail());
+            List<String> infos = MemUtils.searchByMail(info.getEmail(), SQL.checkEmail, MemberInfo.class);
             out.println(infos.get(0));
 
 

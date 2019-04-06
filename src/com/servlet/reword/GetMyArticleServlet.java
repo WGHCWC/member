@@ -1,8 +1,8 @@
 package com.servlet.reword;
 
 import com.Bean.Article;
-import com.Bean.Message;
 import com.utils.DB;
+import com.utils.InputStreamUtils;
 import com.utils.MemUtils;
 import com.utils.MyResult;
 import com.utils.SQL;
@@ -17,13 +17,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/GetArticleServlet")
-public class GetArticleServlet extends HttpServlet {
+@WebServlet("/GetMyArticleServlet")
+public class GetMyArticleServlet extends HttpServlet {
 
     /**
      * Constructor of the object.
      */
-    public GetArticleServlet() {
+    public GetMyArticleServlet() {
         super();
     }
 
@@ -71,25 +71,32 @@ public class GetArticleServlet extends HttpServlet {
 
         PrintWriter out = response.getWriter();
         MyResult<List<Article>> myResult=new MyResult();
+        String a="";
+        try {
+            a = InputStreamUtils.getInputString(request.getInputStream());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if(!a.isEmpty()){
 
-        List<String> arts=MemUtils.searchAll(SQL.searchAllArticle, Article.class);
-
-        if(arts!=null){
-            myResult.code=200;
-            List<Article> art=new ArrayList<>();
-            for (int i=arts.size()-1;i>=0;i--){
-                Article msge=DB.gson().fromJson(arts.get(i),Article.class);
-                art.add(msge);
-
+            List<String> arts = MemUtils.searchByMail(a, SQL.selectArtByEmail,Article.class);
+            if(arts!=null){
+                myResult.code=200;
+                List<Article> art=new ArrayList<>();
+                for (int i=arts.size()-1;i>=0;i--){
+                    Article msge=DB.gson().fromJson(arts.get(i),Article.class);
+                    art.add(msge);
+                }
+                myResult.setData(art);
+            }else {
+                myResult.code=400;
+                myResult.msg="暂无数据";
             }
-            myResult.setData(art);
-        }else {
-            myResult.code=400;
-            myResult.msg="暂无数据";
+
+
         }
 
-
-        String a=DB.gson().toJson(myResult, MyResult.class);
+        a=DB.gson().toJson(myResult, MyResult.class);
         out.println(a);
 
 

@@ -1,24 +1,14 @@
 package com.Bean;
 
 
-
 public class Meeting {
-    private String id;
     private String name;
     private String address;
     private String mail;
     private String introduce;
-    private String status="0";
-
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
+    private String day;
+    private String startTime;
+    private String endTime;
 
 
     public String getName() {
@@ -53,11 +43,27 @@ public class Meeting {
         this.introduce = introduce;
     }
 
-    public String getStatus() {
-        return status;
+    public String getDay() {
+        return day;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setDay(String day) {
+        this.day = day;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 }

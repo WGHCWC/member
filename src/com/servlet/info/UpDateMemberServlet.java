@@ -1,7 +1,7 @@
 package com.servlet.info;
 
 import com.Bean.MemberInfo;
-import com.Bean.MyResult;
+import com.utils.MyResult;
 import com.utils.DB;
 import com.utils.InputStreamUtils;
 import com.utils.MemUtils;
@@ -74,12 +74,12 @@ public class UpDateMemberServlet extends HttpServlet {
             e.printStackTrace();
         }
             int num=MemUtils.insertMember(info,SQL.updateMemberInfo);
-            if(num!=1){
+            if(num==0){
                 myResult.code=400;
                 myResult.msg=" 操作失误，联系管理员...";
             }else {
                 myResult.code=200;
-                List<String> a=MemUtils.searchByMail(info.getMail());
+                List<String> a=MemUtils.searchByMail(info.getMail(),SQL.checkEmail,MemberInfo.class);
                 myResult.setData(a.get(0));
 
         }

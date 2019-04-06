@@ -2,11 +2,28 @@ package com.Bean;
 
 public class Article {
     private String id;
-    private String times="0";
     private String title;
+    private String mail;
     private String author;
-    private String main;
-    private String status="0";
+    private String address;
+    private String introduce;
+    private int times=0;
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public int getTimes() {
+        return times;
+    }
+
+    public void setTimes(int times) {
+        this.times = times;
+    }
 
     public String getId() {
         return id;
@@ -14,14 +31,6 @@ public class Article {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getTimes() {
-        return times;
-    }
-
-    public void setTimes(String times) {
-        this.times = times;
     }
 
     public String getTitle() {
@@ -40,19 +49,19 @@ public class Article {
         this.author = author;
     }
 
-    public String getMain() {
-        return main;
+    public String getAddress() {
+        return address;
     }
 
-    public void setMain(String main) {
-        this.main = main;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getStatus() {
-        return status;
+    public String getIntroduce() {
+        return introduce;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
     }
 }

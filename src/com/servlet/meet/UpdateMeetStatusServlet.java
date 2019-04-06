@@ -73,10 +73,10 @@ public class UpdateMeetStatusServlet extends HttpServlet {
             e.printStackTrace();
         }
         if(info!=null) {
-            int i = MemUtils.updateStatus(info.getId(),info.getStatus(), SQL.updateMeetById);
-            if(i==1){
-                out.println("success");
-            }
+      //      int i = MemUtils.updateStatus(info.getId(),info.getStatus(), SQL.updateMeetById);
+//            if(i==1){
+//                out.println("success");
+//            }
 
         }
         out.flush();

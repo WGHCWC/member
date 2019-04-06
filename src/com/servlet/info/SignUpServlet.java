@@ -1,6 +1,6 @@
 package com.servlet.info;
 
-import com.Bean.MyResult;
+import com.utils.MyResult;
 import com.utils.DB;
 import com.utils.MemUtils;
 import com.utils.SQL;
@@ -76,7 +76,7 @@ public class SignUpServlet extends HttpServlet {
         }
         MyResult<String> myResult = new MyResult<>();
 
-        List<String> infos = MemUtils.searchByMail(info.getMail());
+        List<String> infos = MemUtils.searchByMail(info.getMail(),SQL.checkEmail,MemberInfo.class);
         if (infos != null) {
             myResult.setCode(400);
             myResult.msg = "用户已存在";
@@ -87,7 +87,7 @@ public class SignUpServlet extends HttpServlet {
                 myResult.msg = "注册失败，联系管理员。。";
             } else {
                 myResult.setCode(200);
-                myResult.setData(MemUtils.searchByMail(info.getMail()).get(0));
+                myResult.setData(MemUtils.searchByMail(info.getMail(),SQL.checkEmail,MemberInfo.class).get(0));
             }
 
         }

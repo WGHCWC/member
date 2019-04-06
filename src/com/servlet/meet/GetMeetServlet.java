@@ -1,12 +1,14 @@
 package com.servlet.meet;
 
 import com.Bean.Meeting;
+import com.utils.MyResult;
 import com.utils.DB;
 import com.utils.MemUtils;
 import com.utils.SQL;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
@@ -67,11 +69,26 @@ public class GetMeetServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
 
         PrintWriter out = response.getWriter();
+        MyResult<List<Meeting>> myResult=new MyResult();
 
         List<String> meets=MemUtils.searchAll(SQL.searchAllMeeting, Meeting.class);
+        if(meets!=null){
+            myResult.code=200;
+            List<Meeting> meetings=new ArrayList<>();
+          for (int i=meets.size()-1;i>=0;i--){
+              Meeting meeting=DB.gson().fromJson(meets.get(i),Meeting.class);
+              meetings.add(meeting);
+
+          }
+          myResult.setData(meetings);
+        }else {
+            myResult.code=400;
+            myResult.msg="暂无数据";
+        }
 
 
-        String a=DB.gson().toJson(meets,List.class);
+
+        String a=DB.gson().toJson(myResult,MyResult.class);
         out.println(a);
 
 

@@ -1,11 +1,12 @@
 package com.servlet.info;
 
 import com.Bean.MemberInfo;
-import com.Bean.MyResult;
+import com.utils.MyResult;
 import com.utils.DB;
 import com.Bean.LoginInfo;
 import com.utils.MemUtils;
 import com.utils.InputStreamUtils;
+import com.utils.SQL;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -76,7 +77,7 @@ public class SignInServlet extends HttpServlet {
         }
         MyResult<MemberInfo> infoMyResult = new MyResult<>();
         if (MemUtils.checkPassword(info.getEmail(), info.getPassword())) {
-            List<String> infos = MemUtils.searchByMail(info.getEmail());
+            List<String> infos = MemUtils.searchByMail(info.getEmail(), SQL.checkEmail,MemberInfo.class);
 
             infoMyResult.setData(DB.gson().fromJson(infos.get(0),MemberInfo.class));
             infoMyResult.setCode(200);

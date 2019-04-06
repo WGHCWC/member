@@ -1,4 +1,4 @@
-package com.Bean;
+package com.utils;
 
 import java.util.List;
 

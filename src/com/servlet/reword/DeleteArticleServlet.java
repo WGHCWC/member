@@ -5,6 +5,7 @@ import com.mysql.cj.xdevapi.SqlDataResult;
 import com.utils.DB;
 import com.utils.InputStreamUtils;
 import com.utils.MemUtils;
+import com.utils.MyResult;
 import com.utils.SQL;
 
 import java.io.IOException;
@@ -67,20 +68,26 @@ public class DeleteArticleServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
 
         PrintWriter out = response.getWriter();
-        Meeting info = null;
+        String a="";
+        MyResult myResult=new MyResult();
         try {
-            String a=InputStreamUtils.getInputString(request.getInputStream());
-            info = DB.gson().fromJson(a, Meeting.class);
+            a =InputStreamUtils.getInputString(request.getInputStream());
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-            int i = MemUtils.deleteById("1", SQL.delArticle);
+        if(!a.isEmpty()) {
+            int i = MemUtils.deleteById(a, SQL.delArticle);
             if(i==1){
-                out.println("success");
+                myResult.code=200;
+
+            }else {
+                myResult.code=400;
+                myResult.msg="删除失败";
             }
 
-
+        }
+        a=DB.gson().toJson(myResult,MyResult.class);
+        out.println(a);
         out.flush();
         out.close();
 

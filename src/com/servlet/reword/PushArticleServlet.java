@@ -2,11 +2,15 @@ package com.servlet.reword;
 
 import com.Bean.Article;
 import com.Bean.Meeting;
+import com.utils.DB;
+import com.utils.InputStreamUtils;
 import com.utils.MemUtils;
+import com.utils.MyResult;
 import com.utils.SQL;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -71,19 +75,30 @@ public class PushArticleServlet extends HttpServlet {
         // String meet= InputStreamUtils.getInputString(request.getInputStream());
 
         //  Meeting meeting=DB.gson().fromJson(meet,Meeting.class);
-        Article article = new Article();
-        article.setTitle("苏州");
-        article.setAuthor("ss00");
-        article.setMain("1@1.com");
-        article.setStatus("0");
-        article.setId(null);
+        Article article =null;
+        MyResult<List<Article>> myResult=new MyResult();
 
-        int a = MemUtils.updateSQL(article, SQL.insertArticle);
+        try {
+            String a= InputStreamUtils.getInputString(request.getInputStream());
+            article = DB.gson().fromJson(a, Article.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
+
+        if (article != null) {
+            int a = MemUtils.updateSQL(article, SQL.insertArticle);
+            if (a == 1) {
+                myResult.code = 200;
+
+            } else {
+                myResult.code = 400;
+                myResult.msg = "添加论文失败";
+            }
+        }
+        String a = DB.gson().toJson(myResult, MyResult.class);
         out.println(a);
-
-
         out.flush();
         out.close();
 

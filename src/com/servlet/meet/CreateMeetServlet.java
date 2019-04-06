@@ -1,7 +1,7 @@
 package com.servlet.meet;
 
 import com.Bean.Meeting;
-import com.Bean.MemberInfo;
+import com.utils.MyResult;
 import com.utils.DB;
 import com.utils.InputStreamUtils;
 import com.utils.MemUtils;
@@ -9,7 +9,6 @@ import com.utils.SQL;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -71,19 +70,26 @@ public class CreateMeetServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         Meeting meeting = null;
+        MyResult myResult = new MyResult();
         try {
-            String  a = InputStreamUtils.getInputString(request.getInputStream());
+            String a = InputStreamUtils.getInputString(request.getInputStream());
             meeting = DB.gson().fromJson(a, Meeting.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
         if (meeting != null) {
+
             int a = MemUtils.updateSQL(meeting, SQL.insertMeeting);
-            out.println(a);
+            if (a == 1) {
+                myResult.code = 200;
 
+            } else {
+                myResult.code = 400;
+                myResult.msg = "添加会议失败";
+            }
         }
-
-
+        String a = DB.gson().toJson(myResult, MyResult.class);
+        out.println(a);
         out.flush();
         out.close();
 

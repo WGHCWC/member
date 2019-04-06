@@ -2,6 +2,7 @@ package com.servlet.message;
 
 import com.Bean.Meeting;
 import com.Bean.Message;
+import com.utils.MyResult;
 import com.utils.DB;
 import com.utils.InputStreamUtils;
 import com.utils.MemUtils;
@@ -67,19 +68,27 @@ public class CreateMessageServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         request.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
-
+        MyResult myResult = new MyResult();
         Message msg = null;
+        String a = "";
         try {
-            String a = InputStreamUtils.getInputString(request.getInputStream());
+            a = InputStreamUtils.getInputString(request.getInputStream());
             msg = DB.gson().fromJson(a, Message.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
         if (msg != null) {
-            int a = MemUtils.updateSQL(msg, SQL.insertMessage);
-            out.println(a);
-        }
+            int col = MemUtils.updateSQL(msg, SQL.insertMessage);
+            if (col == 1) {
+                myResult.code = 200;
 
+            } else {
+                myResult.code = 400;
+                myResult.msg = "添加失败";
+            }
+        }
+        a = DB.gson().toJson(myResult, MyResult.class);
+        out.println(a);
 
 
         out.flush();

@@ -11,7 +11,7 @@ public class SQL {
             "where mail=?;";
 
     public static final String updateLevel = "update MemberInfo  set level=? where id=?";
-
+    public static final String delMember = "DELETE FROM MemberInfo WHERE mail=?;";
     public static final String checkEmail = "select * from MemberInfo where mail =?";
     public static final String searchAllMember = "select * from MemberInfo ;";
     public static final String insertMember = "insert into MemberInfo set " +
@@ -19,8 +19,8 @@ public class SQL {
             "name=?," +
             "address=?," +
             "background=?," +
+            "introduce=?," +
             "password=?," +
-            "introduce=?" +
             "mail=?";
 
     /**
@@ -28,13 +28,8 @@ public class SQL {
      */
 
     public static final String searchAllMeeting = "select * from Meeting ;";
-    public static final String insertMeeting = "insert into Meeting set " +
-            "id=?," +
-            "name=?," +
-            "address=?," +
-            "mail=?," +
-            "introduce=?," +
-            "status=?;";
+    public static final String insertMeeting = "insert into Meeting set  name=?,address=?,mail=?,introduce=?,day=?,startTime=?,endTime=?;";
+
     public static final String updateMeetById = "update Meeting  set status=? where id=?;";
 
 
@@ -43,10 +38,9 @@ public class SQL {
      */
     public static final String insertMessage = "insert into Message set " +
             "id=?," +
+            "date=?," +
             "title=?," +
-            "author=?," +
-            "main=?," +
-            "status=?;";
+            "details=?" ;
     public static final String searchAllMessage = "select * from Message ;";
     public static final String delMessage = "DELETE FROM Message WHERE id=?;";
 
@@ -55,10 +49,11 @@ public class SQL {
      * article
      */
 
-    public static final String insertArticle = "insert into Article set id=?,times=?,title=?,author=?,main=?,status=?;";
+    public static final String insertArticle = "insert into Article set id=?,title=?,mail=?,author=?,address=?,introduce=?,times=?;";
     public static final String searchAllArticle = "select * from Article ;";
     public static final String updateVoteArticle = "update Article  set times=times+1 where id=?";
     public static final String delArticle = "DELETE FROM Article WHERE id=?;";
+    public static final String selectArtByEmail = "select * from Article where mail =?";
 
 
 }

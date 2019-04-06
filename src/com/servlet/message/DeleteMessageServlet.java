@@ -1,6 +1,6 @@
 package com.servlet.message;
 
-import com.Bean.Meeting;
+import com.utils.MyResult;
 import com.utils.DB;
 import com.utils.InputStreamUtils;
 import com.utils.MemUtils;
@@ -65,20 +65,26 @@ public class DeleteMessageServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
 
         PrintWriter out = response.getWriter();
-        Meeting info = null;
+        String a="";
+        MyResult myResult=new MyResult();
         try {
-            String a=InputStreamUtils.getInputString(request.getInputStream());
-            info = DB.gson().fromJson(a, Meeting.class);
+          a =InputStreamUtils.getInputString(request.getInputStream());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if(info!=null) {
-            int i = MemUtils.deleteById("1", SQL.delMessage);
-            if(1==1){
-                out.println("success");
+        if(!a.isEmpty()) {
+            int i = MemUtils.deleteById(a, SQL.delMessage);
+            if(i==1){
+                myResult.code=200;
+
+            }else {
+                myResult.code=400;
+                myResult.msg="删除失败";
             }
 
         }
+        a=DB.gson().toJson(myResult,MyResult.class);
+        out.println(a);
         out.flush();
         out.close();
 
